@@ -1,0 +1,55 @@
+{% extends 'wiki/base.html' %}
+{% load markdown_tags %}
+
+{% if page %}
+{% block header %}
+<meta name="title" content="{{ page.title }}" />
+<meta name="description" content="{{ page.description }}" />
+
+<meta itemprop="title" content="{{ page.title }}" />
+<meta itemprop="description" content="{{ page.description }}" />
+
+<meta property="og:title" content="{{ page.title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ request.get_host }}{% url 'page_detail' slug=page.slug %}" />
+<meta property="og:description" content="{{ page.description }}">
+
+<meta property="twitter:title" content="{{ page.title }}" />
+<meta property="twitter:type" content="website" />
+<meta property="twitter:url" content="{{ request.get_host }}{% url 'page_detail' slug=page.slug %}" />
+<meta property="twitter:description" content="{{ page.description }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="post-content-section">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 post-title-block">
+
+                <h1 class="title">{{ page.title }}</h1>
+                <ul class="list-inline text-center">
+                    <li>{{ page.author }} | </li>
+        			{% if page.created_at %}
+						<li>
+							{{ page.created_at }}
+						</li>
+        			{% endif %}
+                </ul>
+            </div>
+		</div>
+	</div>
+</section>
+<div class="container-fluid" style="margin-top: -1.5rem;">
+	<div class="col-md-10 offset-md-1" style="padding: 23rem 2rem;">
+		<p>{{ page.text | markdown_to_html | safe }}</p>
+		{% if user.is_authenticated %}
+		<a class="btn btn-outline-warning" href="{% url 'page_update' slug=page.slug %}">Edit<span class="glyphicon glyphicon-pencil"></span></a>
+		<a class="btn btn-outline-info" href="{% url 'page_history' slug=page.slug %}">History</a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+
+{% endif %}

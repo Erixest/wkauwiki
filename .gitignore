@@ -1,0 +1,15 @@
+*.pyc
+__pycache__
+wikienv
+.venv/
+*.sqlite3
+.DS_Store
+
+.idea/
+staticfiles/
+static/
+
+.coverage*
+coverage*
+
+*/local_settings.py

@@ -1,0 +1,23 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+    <div class="col-md-8">
+    <!--<h1>New post</h1>-->
+		<div class="post_edit">
+			<form method="POST" class="post-form">{% csrf_token %}
+                <p style="font-size:22px;">Title:</p>
+                <p>{{ form.title }}</p>
+                <p style="font-size:22px;">Tags:</p>
+                <p>{{ form.tags }}</p>
+                <p style="font-size:22px;">Content:</p>
+                <p style="background-color:#EEEEEE">{{ form.content }}</p>
+
+                <button type="submit" class="save btn btn-default">Save</button>
+			</form>
+
+		</div>
+        <div style="padding-top:5%;">{{ form.media }}</div>
+    </div>
+{% endblock %}
+
+

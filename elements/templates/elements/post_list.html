@@ -1,0 +1,39 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+
+<div class="col-md-8">
+	{% if posts %}
+		{% for post in posts %}
+			<div class="post">
+				<div class="date">
+					<p>published: {{ post.published_date }}</p>
+				</div>
+				<h1><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h1>
+				<p>
+					Author: <a href="/posts/author/{{ post.author}}">{{post.author}}</a>
+					| Tags:
+					{% for tag in post.tags.all %}
+						<a href="{% url "post_filter" string=tag.name %}">{{ tag.name }}</a>
+						{% if forloop.counter != forloop.last %}
+							,
+						{% endif %}
+					{% endfor %}
+				</p>
+		
+			</div>
+			{% if user.is_authenticated %}
+			<div class="delete">
+				<a class="btn" href="/posts/{{ post.pk}}/delete">Delete</a>
+			</div>
+			{% endif %}
+			<div class="horizontalBorder"></div>
+		{% endfor %}
+		{%else%}
+		<p style="margin-top: 20px;"> no Posts available</p>
+		{%endif%}
+</div>
+
+
+{% endblock %}
+		
